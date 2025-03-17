@@ -3,9 +3,8 @@
 # Enable installation of Custom Resource Definitions (CRDs)
 installCRDs: true
 
-# cert-manager controller configuration
-controller:
-  replicaCount: 1
+# Set the cert-manager controller replica count directly
+replicaCount: 1
 
 # cert-manager webhook configuration
 webhook:
