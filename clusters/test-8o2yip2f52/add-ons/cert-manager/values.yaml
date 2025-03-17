@@ -1,1 +1,32 @@
-test: test
+# Basic cert-manager values.yaml for Helm installation
+
+# Enable installation of Custom Resource Definitions (CRDs)
+installCRDs: true
+
+# cert-manager controller configuration
+controller:
+  replicaCount: 1
+  extraArgs: []
+  # Define resource requests and limits as needed
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+# cert-manager webhook configuration
+webhook:
+  replicaCount: 1
+  extraArgs: []
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+# cert-manager CA Injector configuration
+cainjector:
+  replicaCount: 1
+  extraArgs: []
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
