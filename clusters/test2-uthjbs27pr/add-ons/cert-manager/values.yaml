@@ -1,0 +1,22 @@
+cainjector:
+  affinity: {}
+  extraArgs: []
+  nodeSelector: {}
+  replicaCount: 1
+  resources: {}
+  tolerations: []
+controller:
+  affinity: {}
+  extraArgs: []
+  nodeSelector: {}
+  replicaCount: 1
+  resources: {}
+  tolerations: []
+installCRDs: true
+webhook:
+  affinity: {}
+  extraArgs: []
+  nodeSelector: {}
+  replicaCount: 1
+  resources: {}
+  tolerations: []
