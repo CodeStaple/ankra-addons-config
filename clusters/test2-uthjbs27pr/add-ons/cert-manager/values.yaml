@@ -1,22 +1,15 @@
-cainjector:
-  affinity: {}
-  extraArgs: []
-  nodeSelector: {}
-  replicaCount: 1
-  resources: {}
-  tolerations: []
-controller:
-  affinity: {}
-  extraArgs: []
-  nodeSelector: {}
-  replicaCount: 1
-  resources: {}
-  tolerations: []
+# Basic cert-manager values.yaml for Helm installation
+
+# Enable installation of Custom Resource Definitions (CRDs)
 installCRDs: true
+
+# Set the cert-manager controller replica count directly
+replicaCount: 1
+
+# cert-manager webhook configuration
 webhook:
-  affinity: {}
-  extraArgs: []
-  nodeSelector: {}
   replicaCount: 1
-  resources: {}
-  tolerations: []
+
+# cert-manager CA Injector configuration
+cainjector:
+  replicaCount: 1
