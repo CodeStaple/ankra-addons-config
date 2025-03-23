@@ -1,0 +1,47 @@
+affinity: {}
+cainjector:
+  enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: quay.io/jetstack/cert-manager-cainjector
+    tag: v1.9.1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
+global:
+  leaderElection:
+    namespace: cert-manager
+image:
+  pullPolicy: IfNotPresent
+  repository: quay.io/jetstack/cert-manager-controller
+  tag: v1.9.1
+installCRDs: true
+nodeSelector: {}
+replicaCount: 1
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+tolerations: []
+webhook:
+  enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: quay.io/jetstack/cert-manager-webhook
+    tag: v1.9.1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  securePort: 10250
+  startupTimeoutSeconds: 60
