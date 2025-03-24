@@ -1,0 +1,11 @@
+ingress:
+  enabled: true
+  hosts:
+  - host: ai.ankra.app
+    paths:
+    - path: /
+      pathType: Prefix
+ollama:
+  models:
+    pull:
+    - deepseek-r1:7b
