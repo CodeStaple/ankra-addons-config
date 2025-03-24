@@ -1,7 +1,7 @@
 ingress:
   enabled: true
   hosts:
-  - host: ai.mydomain.io
+  - host: ai.ankra.app
     paths:
     - path: /
       pathType: Prefix
