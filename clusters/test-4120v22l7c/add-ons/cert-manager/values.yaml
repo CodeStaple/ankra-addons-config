@@ -1,0 +1,28 @@
+image:
+  pullPolicy: IfNotPresent
+  repository: quay.io/jetstack/cert-manager-controller
+  tag: v1.9.1
+installCRDs: true
+replicaCount: 1
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+webhook:
+  enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: quay.io/jetstack/cert-manager-webhook
+    tag: v1.9.1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  securePort: 10250
+  startupTimeoutSeconds: 60
