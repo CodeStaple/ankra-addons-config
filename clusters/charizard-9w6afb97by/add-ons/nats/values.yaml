@@ -1,0 +1,272 @@
+############################################################
+# NATS config
+############################################################
+config:
+  # 1) Enable and configure JetStream exactly as in your nats.conf
+  jetstream:
+    enabled: true
+
+    fileStore:
+      enabled: true
+      dir: /data
+
+      ############################################################
+      # stateful set -> volume claim templates -> jetstream pvc
+      ############################################################
+      pvc:
+        enabled: true
+        size: 10Gi
+
+  # 2) Enable and configure the resolver block
+  resolver:
+    enabled: true
+    dir: /data/resolver
+    merge:
+      type: full
+      allow_delete: true
+      interval: "0s"
+      timeout: "5s"
+
+  # 3) Everything else lives in a top-level “merge” into the root of nats.conf
+  merge:
+    debug:   true
+    trace:   true
+    logtime: true
+
+    # your operator JWT and system account
+    operator:       "eyJ0eXAiOiJKV1QiLCJhbGciOiJlZDI1NTE5LW5rZXkifQ.eyJqdGkiOiJYTkpCR1JIVkFNQUVFTVVTSllTTE9RNlpOQlZJSUZWQkZaWVZBVlFFUE5HTlpRN1hWV0dRIiwiaWF0IjoxNzQ2MTg2NTQ5LCJpc3MiOiJPQTdLWklJT0paS0VENU03Q1dRTUNWTzJFR1cySTQ1Q1dJUkVVQjRFQ01DUklSNFlTMklXTkpQNiIsIm5hbWUiOiJTQU9QIiwic3ViIjoiT0E3S1pJSU9KWktFRDVNN0NXUU1DVk8yRUdXMkk0NUNXSVJFVUI0RUNNQ1JJUjRZUzJJV05KUDYiLCJuYXRzIjp7ImFjY291bnRfc2VydmVyX3VybCI6Im5hdHM6Ly9uYXRzLmFua3JhLnN2Yy5jbHVzdGVyLmxvY2FsOjQyMjIiLCJzeXN0ZW1fYWNjb3VudCI6IkFCQUVZSVhXNEhTMkpSUlg1RlRFV0hXWjREUDNYNU5aM1NGUk01N0pISTZSTVNDNFlFNU9JVERUIiwidHlwZSI6Im9wZXJhdG9yIiwidmVyc2lvbiI6Mn19.qkwAJS4jF-h1Pm9lpoLTHxBbt9-j7MPcja--Mys_TrXNYfSbMXOmqAuyLtIKQ0TMvlehP0C7RKubgScKWLrzBA"
+    system_account: "ABAEYIXW4HS2JRRX5FTEWHWZ4DP3X5NZ3SFRM57JHI6RMSC4YE5OITDT"
+
+    # resolver_preload is also a top-level block in nats.conf
+    resolver_preload:
+      "ABAEYIXW4HS2JRRX5FTEWHWZ4DP3X5NZ3SFRM57JHI6RMSC4YE5OITDT": "eyJ0eXAiOiJKV1QiLCJhbGciOiJlZDI1NTE5LW5rZXkifQ.eyJqdGkiOiJJUFNLSUhKMzdKRk1YRTdBQzZKS1kzSU43NVNZMjY2WjJRUFE0MkRZWFhVRVJDTVoyN0tBIiwiaWF0IjoxNzQ1MjM1NDI1LCJpc3MiOiJPQTdLWklJT0paS0VENU03Q1dRTUNWTzJFR1cySTQ1Q1dJUkVVQjRFQ01DUklSNFlTMklXTkpQNiIsIm5hbWUiOiJOQVRTU1lTIiwic3ViIjoiQUJBRVlJWFc0SFMySlJSWDVGVEVXSFdaNERQM1g1TlozU0ZSTTU3SkhJNlJNU0M0WUU1T0lURFQiLCJuYXRzIjp7ImxpbWl0cyI6eyJzdWJzIjotMSwiZGF0YSI6LTEsInBheWxvYWQiOi0xLCJpbXBvcnRzIjotMSwiZXhwb3J0cyI6LTEsIndpbGRjYXJkcyI6dHJ1ZSwiY29ubiI6LTEsImxlYWYiOi0xfSwiZGVmYXVsdF9wZXJtaXNzaW9ucyI6eyJwdWIiOnt9LCJzdWIiOnt9fSwiYXV0aG9yaXphdGlvbiI6e30sInR5cGUiOiJhY2NvdW50IiwidmVyc2lvbiI6Mn19.tCgCCgXD-7b8WVCc97juip6Pm7JZyYB1MGaJtfVKnsZwxYMURxLZuh3pvm-ZIKlTBE5c_fJFdQkKN4_IgqFcDQ"
+      "AD7YAXDPJWFB3GMECPL3QY24W4BCHTO3MFUZ3KJ536TDCEKVGZB4WPEJ": "eyJ0eXAiOiJKV1QiLCJhbGciOiJlZDI1NTE5LW5rZXkifQ.eyJqdGkiOiJSTkJBQkFWNFVES0JESEFBTDNKS0kzNzdSRFZEVDJWRDRCTjdJTUc3QjNWTFlKMkVYTjdRIiwiaWF0IjoxNzQ1NTk0NzUyLCJpc3MiOiJPQTdLWklJT0paS0VENU03Q1dRTUNWTzJFR1cySTQ1Q1dJUkVVQjRFQ01DUklSNFlTMklXTkpQNiIsIm5hbWUiOiJTWVMiLCJzdWIiOiJBRDdZQVhEUEpXRkIzR01FQ1BMM1FZMjRXNEJDSFRPM01GVVozS0o1MzZURENFS1ZHWkI0V1BFSiIsIm5hdHMiOnsibGltaXRzIjp7InN1YnMiOi0xLCJkYXRhIjotMSwicGF5bG9hZCI6LTEsImltcG9ydHMiOi0xLCJleHBvcnRzIjotMSwid2lsZGNhcmRzIjp0cnVlLCJjb25uIjotMSwibGVhZiI6LTEsIm1lbV9zdG9yYWdlIjotMSwiZGlza19zdG9yYWdlIjotMSwic3RyZWFtcyI6LTEsImNvbnN1bWVyIjotMSwibWF4X2Fja19wZW5kaW5nIjotMSwibWVtX21heF9zdHJlYW1fYnl0ZXMiOi0xLCJkaXNrX21heF9zdHJlYW1fYnl0ZXMiOi0xfSwicmV2b2NhdGlvbnMiOnsiVUFUVVVLSE5VT1JENlRQVzVGRTRNWjJFRlJTWkZMSkZVNkFLSlFSRTRGRU03Nk1XUlFQWUtMM08iOjE3NDU1NzI2MDJ9LCJkZWZhdWx0X3Blcm1pc3Npb25zIjp7InB1YiI6eyJhbGxvdyI6WyIkSlMuQVBJLlx1MDAzZSIsIiRKUy5BUEkuSU5GTyIsIiRKUy5BUEkuU1RSRUFNLkNSRUFURS5DT01NQU5EUyIsIiRKUy5BUEkuU1RSRUFNLk5BTUVTIiwiJEtWLlJFVk9DQVRJT05TLlx1MDAzZSIsIiRTWVMuXHUwMDNlIiwiJFNZUy5SRVEuU0VSVkVSLlBJTkcuSlNaIiwiX0lOQk9YLlx1MDAzZSIsImNhbmNlbC5cdTAwM2UiLCJjb21tYW5kcy5cdTAwM2UiXX0sInN1YiI6eyJhbGxvdyI6WyIkU1lTLlx1MDAzZSIsIl9JTkJPWC5cdTAwM2UiLCJjYW5jZWwuXHUwMDNlIiwiY29tbWFuZHMuXHUwMDNlIiwiaW5ib3guXHUwMDNlIl19fSwiYXV0aG9yaXphdGlvbiI6e30sInR5cGUiOiJhY2NvdW50IiwidmVyc2lvbiI6Mn19.sIqJame3xKbWADT0F6q1Lg5b6m3INhurtT-SS-NE3QojkAj7NpHt8mSbLjsncQeOG1DPxvribfzD57aYg1r-AQ"
+
+
+############################################################
+# stateful set -> pod template -> nats container
+############################################################
+container:
+  image:
+    repository: nats
+    tag: 2.11.2-alpine
+
+############################################################
+# stateful set -> pod template -> reloader container
+############################################################
+reloader:
+  enabled: true
+  image:
+    repository: natsio/nats-server-config-reloader
+    tag: 0.17.1
+
+############################################################
+# stateful set -> pod template -> prom-exporter container
+############################################################
+# config.monitor must be enabled
+promExporter:
+  enabled: true
+  image:
+    repository: natsio/prometheus-nats-exporter
+    tag: 0.17.2
+  
+  port: 7777
+  # if config.monitor.tls.enabled is set to true, monitorDomain must be set to the common name
+  # or a SAN used in the tls certificate
+  monitorDomain: localhost
+  
+  ############################################################
+  # prometheus pod monitor
+  ############################################################
+  podMonitor:
+    enabled: true
+
+############################################################
+# service
+############################################################
+service:
+  enabled: true
+
+  # service port options
+  # additional boolean field enable to control whether port is exposed in the service
+  # must be enabled in the config section also
+  # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#serviceport-v1-core
+  ports:
+    nats:
+      enabled: true
+    leafnodes:
+      enabled: true
+    websocket:
+      enabled: true
+    mqtt:
+      enabled: true
+    cluster:
+      enabled: false
+    gateway:
+      enabled: false
+    monitor:
+      enabled: false
+    profiling:
+      enabled: false
+
+############################################################
+# other nats extension points
+############################################################
+
+
+############################################################
+# natsBox
+#
+# NATS Box Deployment and associated resources
+############################################################
+natsBox:
+  enabled: true
+
+  ############################################################
+  # NATS contexts
+  ############################################################
+  contexts:
+    default:
+      creds:
+        # set contents in order to create a secret with the creds file contents
+        contents:
+        # set secretName in order to mount an existing secret to dir
+        secretName:
+        # defaults to /etc/nats-creds/<context-name>
+        dir:
+        key: nats.creds
+      nkey:
+        # set contents in order to create a secret with the nkey file contents
+        contents:
+        # set secretName in order to mount an existing secret to dir
+        secretName:
+        # defaults to /etc/nats-nkeys/<context-name>
+        dir:
+        key: nats.nk
+      # used to connect with client certificates
+      tls:
+        # set secretName in order to mount an existing secret to dir
+        secretName:
+        # defaults to /etc/nats-certs/<context-name>
+        dir:
+        cert: tls.crt
+        key: tls.key
+
+      # merge or patch the context
+      # https://docs.nats.io/using-nats/nats-tools/nats_cli#nats-contexts
+      merge: {}
+      patch: []
+
+  # name of context to select by default
+  defaultContextName: default
+
+  ############################################################
+  # deployment -> pod template -> nats-box container
+  ############################################################
+  container:
+    image:
+      repository: natsio/nats-box
+      tag: 0.17.0
+      pullPolicy:
+      registry:
+      digest:
+      fullImageName:
+
+    # env var map, see nats.env for an example
+    env: {}
+
+    # merge or patch the container
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
+    merge: {}
+    patch: []
+
+  ############################################################
+  # other nats-box extension points
+  ############################################################
+
+  # deployment
+  deployment:
+    # merge or patch the deployment
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#deployment-v1-apps
+    merge: {}
+    patch: []
+    # defaults to "{{ include "nats.fullname" $ }}-box"
+    name:
+
+  # deployment -> pod template
+  podTemplate:
+    # merge or patch the pod template
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#pod-v1-core
+    merge: {}
+    patch: []
+
+  # contexts secret
+  contextsSecret:
+    # merge or patch the context secret
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#secret-v1-core
+    merge: {}
+    patch: []
+    # defaults to "{{ include "nats.fullname" $ }}-box-contexts"
+    name:
+
+  # contents secret
+  contentsSecret:
+    # merge or patch the contents secret
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#secret-v1-core
+    merge: {}
+    patch: []
+    # defaults to "{{ include "nats.fullname" $ }}-box-contents"
+    name:
+
+  # service account
+  serviceAccount:
+    enabled: false
+    # merge or patch the service account
+    # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#serviceaccount-v1-core
+    merge: {}
+    patch: []
+    # defaults to "{{ include "nats.fullname" $ }}-box"
+    name:
+
+################################################################################
+# Extra user-defined resources
+################################################################################
+#
+# add arbitrary user-generated resources
+# example:
+#
+# config:
+#   websocket:
+#     enabled: true
+# extraResources:
+# - apiVersion: networking.istio.io/v1beta1
+#   kind: VirtualService
+#   metadata:
+#     name:
+#       $tplYaml: >
+#         {{ include "nats.fullname" $ | quote }}
+#     labels:
+#       $tplYaml: |
+#         {{ include "nats.labels" $ }}
+#   spec:
+#     hosts:
+#     - demo.nats.io
+#     gateways:
+#     - my-gateway
+#     http:
+#     - name: default
+#       match:
+#       - name: root
+#         uri:
+#           exact: /
+#       route:
+#       - destination:
+#           host:
+#             $tplYaml: >
+#               {{ .Values.service.name | quote }}
+#           port:
+#             number:
+#               $tplYaml: >
+#                 {{ .Values.config.websocket.port }}
+#
+extraResources: []
