@@ -298,7 +298,7 @@ global:
   gitlabBase:
     image:
       repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-base
-  gitlabVersion: 17.10.3
+  gitlabVersion: 17.10.6
   hpa:
     apiVersion: ""
   image: {}
