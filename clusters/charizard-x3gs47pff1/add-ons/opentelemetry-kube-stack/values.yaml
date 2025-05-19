@@ -1,0 +1,56 @@
+# Tell the chart “this is my namespace”
+namespaceOverride: "opentelemetry"
+
+# Install CRDs (chart-managed)
+crds:
+  install: true
+
+# Enable the operator
+opentelemetry-operator:
+  enabled: true
+  admissionWebhooks:
+    failurePolicy: Ignore
+
+# Disable the built-in default collector
+defaultCRConfig:
+  enabled: false
+
+# Define exactly one collector (central)
+collectors:
+  central:
+    enabled: true
+    name: central
+    mode: deployment
+    replicas: 2
+
+    resources:
+      requests:
+        cpu: 200m
+        memory: 300Mi
+      limits:
+        cpu: 400m
+        memory: 600Mi
+
+    config:
+      receivers:
+        loki:
+          protocols:
+            http:
+              endpoint: 0.0.0.0:3500
+            grpc:
+              endpoint: 0.0.0.0:3600
+          useIncomingTimestamp: true
+
+      processors:
+        batch: {}
+
+      exporters:
+        otlp:
+          endpoint: central-collector.opentelemetry.svc.cluster.local:4317
+
+      service:
+        pipelines:
+          logs:
+            receivers:  [loki]
+            processors: [batch]
+            exporters:  [otlp]
