@@ -1,0 +1,20 @@
+# Minimal values.yaml for opentelemetry-operator
+
+# Number of operator replicas
+replicaCount: 1
+
+# Install CRDs
+crds:
+  create: true
+
+# Ensure the operator has its own ServiceAccount
+manager:
+  serviceAccount:
+    create: true
+
+# Enable the admission webhook and automatic cert generation
+admissionWebhooks:
+  create: true
+  certManager:
+    enabled: true
+
