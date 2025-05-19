@@ -1,0 +1,32 @@
+# Minimal values.yaml for opentelemetry-operator with cert-manager
+
+# Operator replica count
+replicaCount: 1
+
+# Ensure CRDs are installed
+crds:
+  create: true
+
+manager:
+  # Create a dedicated ServiceAccount
+  serviceAccount:
+    create: true
+
+  # Required: set the Collector image repository
+  collectorImage:
+    repository: otel/opentelemetry-collector-k8s
+    # tag: 0.124.1  # optional override
+
+admissionWebhooks:
+  create: true
+
+  # Use cert-manager to provision the webhook cert
+  certManager:
+    enabled: true
+    # issuerRef:         # optional: set kind/name of the cert-manager Issuer
+    #   kind: Issuer
+    #   name: self-signer
+
+  # disable Helm-generated certs (ignored when certManager.enabled is true)
+  autoGenerateCert:
+    enabled: false
