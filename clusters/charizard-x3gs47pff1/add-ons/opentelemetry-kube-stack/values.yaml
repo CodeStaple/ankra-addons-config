@@ -1,0 +1,52 @@
+# Install CRDs as part of the Helm release
+crds:
+  create: true
+
+# Enable the operator itself
+opentelemetry-operator:
+  enabled: true
+
+# Disable the built-in “default” collector
+defaultCRConfig:
+  enabled: false
+
+# Define exactly one collector: a Deployment that receives via Loki and exports via OTLP
+collectors:
+  central:
+    enabled: true
+    mode: deployment
+    suffix: central
+    replicas: 2
+    resources:
+      requests:
+        cpu:    200m
+        memory: 300Mi
+      limits:
+        cpu:    400m
+        memory: 600Mi
+
+    config:
+      receivers:
+        loki:
+          # Implements the Loki push API
+          protocols:
+            http:
+              endpoint: 0.0.0.0:3500
+            grpc:
+              endpoint: 0.0.0.0:3600
+          use_incoming_timestamp: true
+
+      processors:
+        batch: {}
+
+      exporters:
+        otlp:
+          # Change this to your next hop
+          endpoint: "central-collector.observability.svc.cluster.local:4317"
+
+      service:
+        pipelines:
+          logs:
+            receivers:  [loki]
+            processors: [batch]
+            exporters:  [otlp]
