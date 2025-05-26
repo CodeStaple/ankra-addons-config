@@ -11,8 +11,8 @@ global:
   ## Prometheus, read the following documentation to understand the risks.
   ## Ref: https://www.ibm.com/docs/en/kubecost/self-hosted/2.x?topic=configuration-prometheus-guide
   ##
-  prometheus: 
-    enabled: true
+  prometheus:
+    enabled: false
     fqdn: http://cost-analyzer-prometheus-server.default.svc  # Address of a Prometheus to connect to if enabled=false
     insecureSkipVerify: false  # If true, Kubecost will not check the TLS cert of prometheus
     # queryServiceBasicAuthSecretName: dbsecret  # kubectl create secret generic dbsecret -n kubecost --from-file=USERNAME --from-file=PASSWORD
