@@ -1,0 +1,47 @@
+# Minimal Loki configuration with 25Gi storage and resource limits
+loki:
+  # Storage configuration for all components
+  ingester:
+    persistence:
+      enabled: true
+      size: 25Gi
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "2Gi"
+        cpu: "1"
+  compactor:
+    persistence:
+      enabled: true
+      size: 25Gi
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "2Gi"
+        cpu: "1"
+  ruler:
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
+      limits:
+        memory: "1Gi"
+        cpu: "500m"
+
+  # Default storage size for other components if needed
+  persistence:
+    size: 25Gi
+
+# Enable persistence for Loki components
+write:
+  persistence:
+    enabled: true
+    size: 25Gi
+read:
+  persistence:
+    enabled: true
+    size: 25Gi
