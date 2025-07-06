@@ -1,70 +1,9 @@
-#Minimal
-global:
-  rbac:
-    create: true
-    aggregateClusterRoles: true
-  podSecurityPolicy:
-    enabled: false
-    useAppArmor: true
-  leaderElection:
-    namespace: "kube-system"
-
-installCRDs: false
-
+# Enable CRD installation via Helm
 crds:
+  # Install CRDs as part of the Helm chart
   enabled: true
+  # Prevent CRDs from being uninstalled when deleting the Helm release
   keep: true
 
-replicaCount: 1
-
-image:
-  repository: quay.io/jetstack/cert-manager-controller
-  pullPolicy: IfNotPresent
-
-serviceAccount:
-  create: true
-
-nodeSelector:
-  kubernetes.io/os: linux
-
-approveSignerNames:
-  - issuers.cert-manager.io/*
-  - clusterissuers.cert-manager.io/*
-
-webhook:
-  replicaCount: 1
-  image:
-    repository: quay.io/jetstack/cert-manager-webhook
-    pullPolicy: IfNotPresent
-  serviceAccount:
-    create: true
-  nodeSelector:
-    kubernetes.io/os: linux
-
-cainjector:
-  enabled: true
-  replicaCount: 1
-  image:
-    repository: quay.io/jetstack/cert-manager-cainjector
-    pullPolicy: IfNotPresent
-  serviceAccount:
-    create: true
-  nodeSelector:
-    kubernetes.io/os: linux
-
-acmesolver:
-  image:
-    repository: quay.io/jetstack/cert-manager-acmesolver
-    pullPolicy: IfNotPresent
-
-startupapicheck:
-  enabled: true
-  image:
-    repository: quay.io/jetstack/cert-manager-startupapicheck
-    pullPolicy: IfNotPresent
-  serviceAccount:
-    create: true
-  nodeSelector:
-    kubernetes.io/os: linux
-
-enabled: true
+# Deprecated: Explicitly disable the legacy installCRDs flag
+installCRDs: false
