@@ -1,0 +1,9 @@
+# Enable CRD installation via Helm
+crds:
+  # Install CRDs as part of the Helm chart
+  enabled: true
+  # Prevent CRDs from being uninstalled when deleting the Helm release
+  keep: true
+
+# Deprecated: Explicitly disable the legacy installCRDs flag
+installCRDs: false
