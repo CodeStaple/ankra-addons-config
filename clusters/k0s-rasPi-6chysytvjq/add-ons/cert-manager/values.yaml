@@ -1,3 +1,4 @@
+#Minimal
 global:
   rbac:
     create: true
