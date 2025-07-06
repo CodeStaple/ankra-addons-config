@@ -1,0 +1,31 @@
+# Minimal cert-manager values.yaml
+
+# Install CRDs as part of the Helm chart
+crds:
+  enabled: true
+
+# Cert-manager controller configuration
+controller:
+  replicaCount: 1
+  image:
+    repository: quay.io/jetstack/cert-manager-controller
+    tag: v1.13.0  # Use your desired version
+    pullPolicy: IfNotPresent
+
+# Enable required components
+webhook:
+  enabled: true
+
+cainjector:
+  enabled: true
+
+prometheus:
+  enabled: true
+
+# Enable startup API check
+startupapicheck:
+  enabled: true
+
+# Global RBAC settings
+rbac:
+  create: true
