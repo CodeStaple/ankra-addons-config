@@ -1,5 +1,6 @@
 ingress:
   enabled: true
+  className: nginx  # Added ingress class name
   hosts:
     - host: "endpoint.watch.tael.io"
       paths:
