@@ -1,0 +1,44 @@
+prometheus:
+  enabled: true
+  serviceMonitor:
+    selfMonitor: true
+  prometheusSpec:
+    replicas: 1
+    retention: 2d
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 250m
+      limits:
+        memory: 1Gi
+        cpu: 500m
+
+alertmanager:
+  enabled: true
+
+grafana:
+  enabled: true
+
+kubeStateMetrics:
+  enabled: true
+
+nodeExporter:
+  enabled: true
+
+pushgateway:
+  enabled: false
+
+prometheusOperator:
+  enabled: true
+  admissionWebhooks:
+    enabled: false
+
+serviceMonitor:
+  enabled: true
+
+podMonitor:
+  enabled: true
+
+# Disable all dashboards and rules
+defaultRules:
+  create: true
